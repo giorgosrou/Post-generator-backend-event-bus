@@ -8,7 +8,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-
 const posts = {};
 
 app.get('/posts', (req,res) => {
@@ -29,7 +28,10 @@ app.post('/posts', async(req, res) => {
         await axios.post('http://localhost:4005/events', {
             type: 'PostCreated',
             data: { id, title }
-        })
+        }).catch((err) => {
+            console.log(err.message);
+        });
+
         console.log("New post created:", posts[id]);
         res.status(201).send(posts[id]);
     } catch (error) {
@@ -38,7 +40,7 @@ app.post('/posts', async(req, res) => {
     }
 });
 
-app.post('/events', (req,res) => {
+app.post('/events', (req,res) => {  
     console.log('Event received', req.body.type);
     res.send({});
 });
