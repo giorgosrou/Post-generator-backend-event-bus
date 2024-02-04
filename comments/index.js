@@ -8,11 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-//const commentsByPostId = {};
+const commentsByPostId = {};
 
-// app.get('/posts/:id/comments', (req,res)=> {
-//     res.send(commentsByPostId[req.params.id] || []); 
-// });
+app.get('/posts/:id/comments', (req,res)=> {
+    res.send(commentsByPostId[req.params.id] || []); 
+});
 
 app.post('/posts/:id/comments', async (req, res) => {
     try {
